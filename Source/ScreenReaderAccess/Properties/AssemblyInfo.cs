@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("ScreenReaderAccess")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A screen reader accessibility mod for Rimworld")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("ScreenReaderAccess")]
