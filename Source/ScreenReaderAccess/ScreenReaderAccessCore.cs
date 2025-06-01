@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,11 +9,16 @@ namespace ScreenReaderAccess
 {
     public class ScreenReaderAccess : Mod
     {
+        public static EventBus EventBusInstance { get; private set; }
+        public static EventPatcher EventPatcherInstance { get; private set; }
+
         public ScreenReaderAccess(ModContentPack content) : base(content)
         {
-            // Initialization code can go here if needed
-            // log out to the dev console that the mod has been loaded
             Log.Message("ScreenReaderAccess mod has been loaded successfully.");
+            // Initialize EventBus and EventPatcher
+            EventBusInstance = new EventBus();
+            EventPatcherInstance = new EventPatcher();
+            EventPatcherInstance.ApplyPatches();
         }
     }
 }
