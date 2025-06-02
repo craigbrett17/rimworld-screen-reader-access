@@ -18,6 +18,11 @@ namespace ScreenReaderAccess
             // Attribute-based patching: Patch all classes in this assembly with HarmonyPatch attributes
             harmony.PatchAll();
         }
+
+        public void RemovePatches()
+        {
+            harmony.UnpatchAll(HarmonyId);
+        }
     }
 
 }

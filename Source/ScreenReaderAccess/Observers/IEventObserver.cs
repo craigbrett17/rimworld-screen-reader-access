@@ -1,7 +1,8 @@
 ﻿namespace ScreenReaderAccess.Observers
 {
-    public interface IEventObserver
+    // Generic observer interface for type-safe events
+    public interface IEventObserver<TEvent>
     {
-        void OnEvent(string eventName, object eventArgs);
+        void OnEvent(TEvent evt);
     }
 }

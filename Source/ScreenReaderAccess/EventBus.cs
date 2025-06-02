@@ -1,29 +1,56 @@
-﻿using ScreenReaderAccess.Observers;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using ScreenReaderAccess.Observers;
 
 namespace ScreenReaderAccess
 {
-    // EventBus: manages observer registration and event dispatching
+    // Type-safe, generic EventBus
     public class EventBus
     {
-        private readonly List<IEventObserver> observers = new List<IEventObserver>();
+        private readonly Dictionary<Type, List<object>> observers = new Dictionary<Type, List<object>>();
 
-        public void RegisterObserver(IEventObserver observer)
+        public void RegisterObserver<TEvent>(IEventObserver<TEvent> observer)
         {
-            if (!observers.Contains(observer))
-                observers.Add(observer);
-        }
-
-        public void UnregisterObserver(IEventObserver observer)
-        {
-            observers.Remove(observer);
-        }
-
-        public void RaiseEvent(string eventName, object eventArgs)
-        {
-            foreach (var observer in observers)
+            var type = typeof(TEvent);
+            if (!observers.TryGetValue(type, out var list))
             {
-                observer.OnEvent(eventName, eventArgs);
+                list = new List<object>();
+                observers[type] = list;
+            }
+            if (!list.Contains(observer))
+            {
+                list.Add(observer);
+            }
+        }
+
+        public void UnregisterObserver<TEvent>(IEventObserver<TEvent> observer)
+        {
+            var type = typeof(TEvent);
+            if (observers.TryGetValue(type, out var list))
+            {
+                list.Remove(observer);
+            }
+        }
+
+        public void RaiseEvent<TEvent>(TEvent evt)
+        {
+            var type = typeof(TEvent);
+            if (observers.TryGetValue(type, out var list))
+            {
+                foreach (var observer in list.Cast<IEventObserver<TEvent>>())
+                {
+                    observer.OnEvent(evt);
+                }
+            }
+        }
+
+        public void ClearObservers<TEvent>()
+        {
+            var type = typeof(TEvent);
+            if (observers.ContainsKey(type))
+            {
+                observers.Remove(type);
             }
         }
     }
