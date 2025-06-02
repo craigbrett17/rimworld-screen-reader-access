@@ -5,7 +5,6 @@ using ScreenReaderAccess.Observers;
 
 namespace ScreenReaderAccess
 {
-    // Type-safe, generic EventBus
     public class EventBus
     {
         private readonly Dictionary<Type, List<object>> observers = new Dictionary<Type, List<object>>();

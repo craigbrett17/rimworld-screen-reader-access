@@ -2,7 +2,6 @@
 
 namespace ScreenReaderAccess.Patches
 {
-    // Event class for PawnKilled
     public class PawnKilledEvent
     {
         public Verse.Pawn Pawn { get; }
@@ -16,7 +15,7 @@ namespace ScreenReaderAccess.Patches
         [HarmonyPostfix]
         public static void Postfix(Verse.Pawn __instance)
         {
-            // Raise event via EventBus (type-safe)
+            // Raise event via EventBus
             ScreenReaderAccess.EventBusInstance?.RaiseEvent(new PawnKilledEvent(__instance));
         }
     }

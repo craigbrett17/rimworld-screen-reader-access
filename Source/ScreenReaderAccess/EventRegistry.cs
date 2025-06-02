@@ -1,4 +1,5 @@
 ﻿using ScreenReaderAccess.Observers;
+using ScreenReaderAccess.Commands;
 
 namespace ScreenReaderAccess
 {
@@ -18,7 +19,7 @@ namespace ScreenReaderAccess
         public void RegisterEvents()
         {
             // Register all events here
-            eventBus.RegisterObserver(new PawnKilledObserver());
+            eventBus.RegisterObserver(new PawnKilledObserver(new LogCommand()));
         }
     }
 }
