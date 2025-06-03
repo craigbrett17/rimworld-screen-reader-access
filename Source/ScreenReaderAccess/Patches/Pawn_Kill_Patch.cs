@@ -16,7 +16,6 @@ namespace ScreenReaderAccess.Patches
         [HarmonyPostfix]
         public static void Postfix(Verse.Pawn __instance)
         {
-            // Convert Verse.Pawn to PawnInfoDto
             var pawnInfo = new PawnInfoDto
             {
                 Name = __instance.Name?.ToString(),
