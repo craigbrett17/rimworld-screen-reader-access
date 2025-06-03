@@ -1,11 +1,12 @@
 ﻿using HarmonyLib;
+using ScreenReaderAccess.DTOs;
 
 namespace ScreenReaderAccess.Patches
 {
     public class PawnKilledEvent
     {
-        public Verse.Pawn Pawn { get; }
-        public PawnKilledEvent(Verse.Pawn pawn) => Pawn = pawn;
+        public PawnInfoDto Pawn { get; }
+        public PawnKilledEvent(PawnInfoDto pawn) => Pawn = pawn;
     }
 
     // Attribute-based Harmony patch for Verse.Pawn.Kill
@@ -15,8 +16,14 @@ namespace ScreenReaderAccess.Patches
         [HarmonyPostfix]
         public static void Postfix(Verse.Pawn __instance)
         {
+            // Convert Verse.Pawn to PawnInfoDto
+            var pawnInfo = new PawnInfoDto
+            {
+                Name = __instance.Name?.ToString(),
+                Label = __instance.def?.label
+            };
             // Raise event via EventBus
-            ScreenReaderAccess.EventBusInstance?.RaiseEvent(new PawnKilledEvent(__instance));
+            ScreenReaderAccess.EventBusInstance?.RaiseEvent(new PawnKilledEvent(pawnInfo));
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using ScreenReaderAccess.Patches;
 using ScreenReaderAccess.Commands;
+using ScreenReaderAccess.DTOs;
 
 namespace ScreenReaderAccess.Observers
 {
@@ -14,7 +15,7 @@ namespace ScreenReaderAccess.Observers
 
         public void OnEvent(PawnKilledEvent evt)
         {
-            var msg = $"Pawn killed: {evt.Pawn?.Name} ({evt.Pawn?.def?.label})";
+            var msg = $"Pawn killed: {evt.Pawn?.Name} ({evt.Pawn?.Label})";
             logCommand.Execute(new LogCommandArgs { Message = msg });
         }
     }
