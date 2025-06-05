@@ -20,6 +20,7 @@ namespace ScreenReaderAccess
         {
             // Register all events here
             eventBus.RegisterObserver(new PawnKilledObserver(new LogCommand()));
+            eventBus.RegisterObserver(new NewMessageObserver(new LogCommand()));
         }
     }
 }
