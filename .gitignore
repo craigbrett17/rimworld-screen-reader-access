@@ -2,6 +2,8 @@
 
 /1.*/
 /Assemblies/
+# this is the output directory for native DLLs, but these are copied after build from source/ScreenReaderAccess/lib
+/lib/
 
 # Created by https://www.toptal.com/developers/gitignore/api/csharp,visualstudio
 # Edit at https://www.toptal.com/developers/gitignore?templates=csharp,visualstudio

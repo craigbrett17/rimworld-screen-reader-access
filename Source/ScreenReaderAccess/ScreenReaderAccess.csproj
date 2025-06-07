@@ -12,6 +12,14 @@
   <ItemGroup>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="CrossSpeak">
+      <HintPath>lib\CrossSpeak.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="TolkDotNet">
+      <HintPath>lib\TolkDotNet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4409" />
@@ -19,6 +27,15 @@
       <IncludeAssets>compile</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="TOWK.Utility.CrossSpeak" Version="1.0.0" />
   </ItemGroup>
+
+  <!-- Copy native ScreenReader DLLs to the output directory after build -->
+  <Target Name="CopyNativeDlls" AfterTargets="Build">
+    <ItemGroup>
+      <NativeDlls Include="lib\screen-reader-libs\**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(NativeDlls)"
+          DestinationFolder="$(OutputPath)\..\lib\screen-reader-libs\%(RecursiveDir)"
+          SkipUnchangedFiles="true" />
+  </Target>
 </Project>
