@@ -1,8 +1,8 @@
-﻿using CrossSpeak;
-using System;
+﻿using System;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using CrossSpeak;
 using Verse;
 
 namespace ScreenReaderAccess
@@ -54,23 +54,12 @@ namespace ScreenReaderAccess
         }
 
         [DllImport("kernel32.dll", SetLastError = true)]
-        static extern bool SetDllDirectory(string lpPathName);
-
-        private void PrepareSetDllDirectory()
-        {
-            // Find the full path to native DLLs first
-            string assemblyPath = Assembly.GetExecutingAssembly().Location;
-            Log.Message($"Assembly path: {assemblyPath}");
-            string basePath = Path.GetDirectoryName(assemblyPath);
-            string nativePath = Path.Combine(basePath, "..", "lib", "screen-reader-libs", "windows");
-
-            bool pathSet = SetDllDirectory(nativePath);
-            Log.Message($"SetDllDirectory('{nativePath}') returned {pathSet}");
-        }
-
-        [DllImport("kernel32.dll", SetLastError = true)]
         static extern IntPtr LoadLibrary(string lpFileName);
 
+        /// <summary>
+        /// Pre-loads the native DLLs we use for screen reader functionality.
+        /// Pre-loading them means that when this is used in Rimworld and Unity, the DLLs are loaded into memory before the DLL path is changed
+        /// </summary>
         private void PreloadNativeDlls()
         {
             string assemblyPath = Assembly.GetExecutingAssembly().Location;
