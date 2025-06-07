@@ -1,15 +1,18 @@
 ﻿using ScreenReaderAccess.Observers;
 using ScreenReaderAccess.Commands;
+using CrossSpeak;
 
 namespace ScreenReaderAccess
 {
     public class EventRegistry
     {
         private readonly EventBus eventBus;
+        private readonly IScreenReader screenReader;
 
-        public EventRegistry(EventBus eventBus)
+        public EventRegistry(EventBus eventBus, CrossSpeak.IScreenReader screenReader)
         {
             this.eventBus = eventBus;
+            this.screenReader = screenReader;
         }
 
         /// <summary>
@@ -20,7 +23,7 @@ namespace ScreenReaderAccess
         {
             // Register all events here
             eventBus.RegisterObserver(new PawnKilledObserver(new LogCommand()));
-            eventBus.RegisterObserver(new NewMessageObserver(new LogCommand()));
+            eventBus.RegisterObserver(new NewMessageObserver(new ScreenReaderOutputCommand(screenReader)));
         }
     }
 }

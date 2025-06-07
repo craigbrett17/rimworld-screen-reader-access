@@ -6,17 +6,20 @@ namespace ScreenReaderAccess.Observers
 {
     public class NewMessageObserver : IEventObserver<MessageEvent>
     {
-        private readonly ICommand<LogCommandArgs> logCommand;
+        private readonly ICommand<ScreenReaderOutputCommandArgs> outputCommand;
 
-        public NewMessageObserver(ICommand<LogCommandArgs> logCommand)
+        public NewMessageObserver(ICommand<ScreenReaderOutputCommandArgs> outputCommand)
         {
-            this.logCommand = logCommand;
+            this.outputCommand = outputCommand;
         }
 
         public void OnEvent(MessageEvent evt)
         {
-            var message = $"Message from game: {evt.Message.Text}";
-            logCommand.Execute(new LogCommandArgs { Message = message });
+            outputCommand.Execute(new ScreenReaderOutputCommandArgs
+            {
+                Message = evt.Message.Text,
+                Interrupt = true
+            });
         }
     }
 }

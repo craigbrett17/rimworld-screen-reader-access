@@ -9,10 +9,10 @@ namespace ScreenReaderAccess.Tests.Observers
 {
     public class NewMessageObserverTests
     {
-        private class TestCommand : ICommand<LogCommandArgs>
+        private class TestCommand : ICommand<ScreenReaderOutputCommandArgs>
         {
-            public LogCommandArgs ReceivedArgs { get; private set; }
-            public void Execute(LogCommandArgs args)
+            public ScreenReaderOutputCommandArgs ReceivedArgs { get; private set; }
+            public void Execute(ScreenReaderOutputCommandArgs args)
             {
                 ReceivedArgs = args;
             }
@@ -32,7 +32,8 @@ namespace ScreenReaderAccess.Tests.Observers
 
             // Assert
             testCommand.ReceivedArgs.Should().NotBeNull();
-            testCommand.ReceivedArgs.Message.Should().Be("Message from game: Hello world!");
+            testCommand.ReceivedArgs.Message.Should().Be("Hello world!");
+            testCommand.ReceivedArgs.Interrupt.Should().BeTrue();
         }
     }
 }
