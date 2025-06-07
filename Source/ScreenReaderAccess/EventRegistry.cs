@@ -23,7 +23,10 @@ namespace ScreenReaderAccess
         {
             // Register all events here
             eventBus.RegisterObserver(new PawnKilledObserver(new LogCommand()));
-            eventBus.RegisterObserver(new NewMessageObserver(new ScreenReaderOutputCommand(screenReader)));
+
+            var screenReaderOutputCommand = new ScreenReaderOutputCommand(screenReader);
+            eventBus.RegisterObserver(new NewMessageObserver(screenReaderOutputCommand));
+            eventBus.RegisterObserver(new MakeLetterObserver(screenReaderOutputCommand));
         }
     }
 }

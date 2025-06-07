@@ -1,9 +1,5 @@
-﻿using CrossSpeak;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using CrossSpeak;
 
 namespace ScreenReaderAccess.Commands
 {
@@ -11,6 +7,7 @@ namespace ScreenReaderAccess.Commands
     {
         public string Message { get; set; }
         public bool Interrupt { get; set; }
+        public int? Delay { get; set; }
     }
 
     public class ScreenReaderOutputCommand : ICommand<ScreenReaderOutputCommandArgs>
@@ -24,7 +21,14 @@ namespace ScreenReaderAccess.Commands
 
         public void Execute(ScreenReaderOutputCommandArgs args)
         {
-            screenReader.Output(args.Message, args.Interrupt);
+            if (args.Delay.HasValue)
+            {
+                Task.Delay(args.Delay.Value).ContinueWith(_ => screenReader.Output(args.Message, args.Interrupt));
+            }
+            else
+            {
+                screenReader.Output(args.Message, args.Interrupt);
+            }
         }
     }
 }

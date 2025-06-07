@@ -1,6 +1,5 @@
 ﻿using ScreenReaderAccess.Patches;
 using ScreenReaderAccess.Commands;
-using ScreenReaderAccess.DTOs;
 
 namespace ScreenReaderAccess.Observers
 {
