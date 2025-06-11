@@ -16,7 +16,7 @@ namespace ScreenReaderAccess.Commands
         private readonly IScreenReader screenReader;
         // Use a static readonly Regex for performance
         private static readonly Regex ColorTagRegex = new Regex(
-            @"<color\s*=\s*""#\w{6}""\s*>(.*?)<\/color>",
+            @"<color\s*=\s*['""]?[^>'""]+['""]?\s*>(.*?)<\/color>",
             RegexOptions.IgnoreCase | RegexOptions.Compiled
         );
 
