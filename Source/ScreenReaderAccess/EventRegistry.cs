@@ -28,6 +28,7 @@ namespace ScreenReaderAccess
             eventBus.RegisterObserver(new NewMessageObserver(screenReaderOutputCommand));
             eventBus.RegisterObserver(new MakeLetterObserver(screenReaderOutputCommand));
             eventBus.RegisterObserver(new TooltipDrawnObserver(screenReaderOutputCommand));
+            eventBus.RegisterObserver(new InspectPanelUpdatedObserver(screenReaderOutputCommand));
         }
     }
 }
