@@ -16,8 +16,6 @@ namespace ScreenReaderAccess.Observers
 
         public void OnEvent(ToolTipDrawnEvent evt)
         {
-            
-
             if (evt.Tooltip.Text == lastTooltipText)
                 return;
 
