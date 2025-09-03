@@ -34,8 +34,6 @@
     <ItemGroup>
       <NativeDlls Include="lib\screen-reader-libs\**\*.*" />
     </ItemGroup>
-    <Copy SourceFiles="@(NativeDlls)"
-          DestinationFolder="$(OutputPath)\..\lib\screen-reader-libs\%(RecursiveDir)"
-          SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(NativeDlls)" DestinationFolder="$(OutputPath)\..\lib\screen-reader-libs\%(RecursiveDir)" SkipUnchangedFiles="true" />
   </Target>
 </Project>
