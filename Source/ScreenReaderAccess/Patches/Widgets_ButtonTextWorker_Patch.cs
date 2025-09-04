@@ -18,6 +18,7 @@ namespace ScreenReaderAccess.Patches
     public static class Widgets_ButtonTextWorker_Patch
     {
         private static string lastButtonKey = string.Empty;
+        private static int debugLogCount = 0;
 
         [HarmonyPostfix]
         public static void Postfix(Rect rect, string label, bool active)
@@ -26,7 +27,17 @@ namespace ScreenReaderAccess.Patches
                 return; // Only proceed during Repaint events
             if (string.IsNullOrWhiteSpace(label))
                 return; // No label to process
-            if (WindowReadingContext.ShouldSuppressHandling(rect))
+
+            bool shouldSuppress = WindowReadingContext.ShouldSuppressHandling(rect);
+            
+            // Debug logging for Load buttons only, first few instances
+            if (debugLogCount < 5 && label.Trim().Equals("Load", System.StringComparison.OrdinalIgnoreCase))
+            {
+                DebugLog.WriteLine($"ButtonPatch - Label: '{label.Trim()}', Rect: {rect}, ShouldSuppress: {shouldSuppress}, MouseOver: {Mouse.IsOver(rect)}", LoggingLevel.Debug);
+                debugLogCount++;
+            }
+            
+            if (shouldSuppress)
                 return; // The current context indicates this region should be suppressed
 
             string key = $"{label.Trim()} ({rect.x:F0},{rect.y:F0})";

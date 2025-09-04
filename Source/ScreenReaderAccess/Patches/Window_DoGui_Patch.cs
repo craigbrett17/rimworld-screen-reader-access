@@ -20,6 +20,7 @@ namespace ScreenReaderAccess.Patches
             {
                 // One-time reflection per window instance (fast enough + cached)
                 margin = Traverse.Create(w).Property("Margin").GetValue<float>();
+                DebugLog.WriteLine($"Storing margin for {w}: {margin}");
             }
             catch
             {
